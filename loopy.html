@@ -18,6 +18,12 @@
         Play
       {{/if}}
     </button>
+
+    - BPM: <select class="bpm">
+      {{#each bpmOptions}}
+        <option value="{{this}}" selected="{{selectedBpm}}">{{this}}</option>
+      {{/each}}
+    </select>
   </p>
 
   <div>

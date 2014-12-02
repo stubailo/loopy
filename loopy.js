@@ -71,6 +71,15 @@ if (Meteor.isClient) {
     },
     "click rect": function () {
       Cells.update(this._id, {$set: {active: ! this.active}});
+    },
+    "change .bpm": function (event) {
+      var newBpm = parseInt(event.target.value, 10);
+
+      newBpm = Math.min(newBpm, 300);
+      newBpm = Math.max(newBpm, 20);
+
+      Session.set("bpm", newBpm);
+      console.log(newBpm);
     }
   });
 
@@ -89,6 +98,13 @@ if (Meteor.isClient) {
     },
     stepXPos: function () {
       return Session.get("step") * 25;
+    },
+    bpm: function () {
+      return Session.get("bpm");
+    },
+    bpmOptions: _.range(20, 300, 5),
+    selectedBpm: function () {
+      return this.valueOf() === Session.get("bpm");
     }
   });
 }
