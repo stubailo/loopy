@@ -53,13 +53,15 @@ if (Meteor.isClient) {
     startStepping();
 
     Tracker.autorun(function () {
-      var step = Session.get("step");
+      if (Session.get("playing")) {
+        var step = Session.get("step");
 
-      Cells.find({time: step}).forEach(function (cell) {
-        if (cell.active) {
-          sounds[cell.instrument].play();
-        }
-      });
+        Cells.find({time: step}).forEach(function (cell) {
+          if (cell.active) {
+            sounds[cell.instrument].play();
+          }
+        });
+      }
     });
   });
 
