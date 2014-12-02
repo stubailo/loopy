@@ -1,0 +1,9 @@
+/* CSS declarations go here */
+
+rect.cell {
+  fill: blue;
+}
+
+rect.cell.active {
+  fill: red;
+}

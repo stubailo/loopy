@@ -1,0 +1,29 @@
+<head>
+  <title>loopy</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <button class="play">
+    {{#if playing}}
+      Pause
+    {{else}}
+      Play
+    {{/if}}
+  </button>
+
+  <div>
+    <svg width="800" height="200">
+      {{#each cells}}
+        <rect x="{{xPos}}" y="{{yPos}}" height=24 width=24
+          class="cell {{#if active}}active{{/if}}" />
+      {{/each}}
+      <rect x="{{stepXPos}}" y="100" height="10" width="24" class="step" />
+    </svg>
+  </div>
+</template>
