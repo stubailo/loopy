@@ -27,12 +27,12 @@
   </p>
 
   <div>
-    <svg width="800" height="130">
+    <svg width="100%" height="20%" viewBox="0 0 800 130">
       {{#each cells}}
-        <rect x="{{xPos}}" y="{{yPos}}" height=24 width=24
+        <rect x="{{xPos}}" y="{{yPos}}" height=22 width=22
           class="cell {{#if active}}active{{/if}}" />
       {{/each}}
-      <rect x="{{stepXPos}}" y="100" height="10" width="24" class="step" />
+      <rect x="{{stepXPos}}" y="100" height="10" width="22" class="step" />
     </svg>
   </div>
 

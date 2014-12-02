@@ -1,9 +1,14 @@
 /* CSS declarations go here */
 
 rect.cell {
-  fill: blue;
+  fill: white;
+  stroke: red;
 }
 
 rect.cell.active {
   fill: red;
+}
+
+svg {
+  width: 100%;
 }
