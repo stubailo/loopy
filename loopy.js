@@ -8,6 +8,13 @@ var sounds = [
 
 Cells = new Mongo.Collection("cells");
 
+Meteor.methods({
+  toggleCell: function(cellId) {
+    var active = Cells.findOne(cellId).active;
+    Cells.update(cellId, {$set: {active: !active}});
+  }
+});
+
 if (Meteor.isClient) {
   Session.setDefault("playing", false);
 
@@ -70,7 +77,7 @@ if (Meteor.isClient) {
       Session.set("playing", ! Session.get("playing"));
     },
     "click rect": function () {
-      Cells.update(this._id, {$set: {active: ! this.active}});
+      Meteor.call("toggleCell", this._id);
     },
     "change .bpm": function (event) {
       var newBpm = parseInt(event.target.value, 10);
