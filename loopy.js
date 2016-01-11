@@ -21,27 +21,30 @@ if (Meteor.isClient) {
   Session.setDefault("step", 0);
   Session.setDefault("bpm", 120);
 
-  var step = function () {
+  function step() {
     Session.set("step", (Session.get("step") + 1) % NUM_STEPS);
+
+    Cells.find({time: Session.get("step")}).forEach(function (cell) {
+      if (cell.active) {
+        sounds[cell.instrument].play();
+      }
+    });
   };
 
-  var startStepping = function () {
-    if (Session.get("playing")) {
-      step();
+  function play() {
+    step();
+    Session.set("playing", true);
 
-      Meteor.setTimeout(function () {
-        startStepping();
-      }, 60000 / Session.get("bpm") / 4);
-    } else {
-      // Wait until we start playing again
-      Tracker.autorun(function () {
-        if (Session.get("playing")) {
-          Tracker.currentComputation.stop();
-          startStepping();
-        }
-      });
-    }
-  };
+    Meteor.setTimeout(function () {
+      if (Session.get("playing")) {
+        play();
+      }
+    }, 60000 / Session.get("bpm") / 4);
+  }
+
+  function pause() {
+    Session.set("playing", false);
+  }
 
   soundManager.onready(function() {
     sounds = _.map(sounds, function (filename, index) {
@@ -56,25 +59,15 @@ if (Meteor.isClient) {
         volume: 50
       });
     });
-
-    startStepping();
-
-    Tracker.autorun(function () {
-      if (Session.get("playing")) {
-        var step = Session.get("step");
-
-        Cells.find({time: step}).forEach(function (cell) {
-          if (cell.active) {
-            sounds[cell.instrument].play();
-          }
-        });
-      }
-    });
   });
 
   Template.hello.events({
     'click .play': function () {
-      Session.set("playing", ! Session.get("playing"));
+      if (Session.get("playing")) {
+        pause();
+      } else {
+        play();
+      }
     },
     "click rect": function () {
       Meteor.call("toggleCell", this._id);
@@ -86,7 +79,6 @@ if (Meteor.isClient) {
       newBpm = Math.max(newBpm, 20);
 
       Session.set("bpm", newBpm);
-      console.log(newBpm);
     }
   });
 
