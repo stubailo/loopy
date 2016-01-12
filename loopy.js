@@ -63,7 +63,19 @@ if (Meteor.isClient) {
 
   Template.oneCell.events({
     "click rect": function () {
-      Meteor.call("toggleCell", this.cellId);
+      Meteor.call("toggleCell", this.cell._id);
+    }
+  });
+
+  Template.oneCell.helpers({
+    xPos: function () {
+      return this.cell.time * 25;
+    },
+    yPos: function () {
+      return this.cell.instrument * 25;
+    },
+    active: function() {
+      return this.cell.active;
     }
   });
 
@@ -88,12 +100,6 @@ if (Meteor.isClient) {
   Template.hello.helpers({
     cells: function () {
       return Cells.find();
-    },
-    xPos: function (time) {
-      return time * 25;
-    },
-    yPos: function (instrument) {
-      return instrument * 25;
     },
     playing: function () {
       return Session.get("playing");

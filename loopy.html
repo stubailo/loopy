@@ -9,11 +9,11 @@
 </body>
 
 <template name="oneCell">
-  <rect x="{{this.xPos}}"
-        y="{{this.yPos}}"
+  <rect x="{{xPos}}"
+        y="{{yPos}}"
         height=22
         width=22
-        class="cell {{#if this.active}}active{{/if}}" />
+        class="cell {{#if active}}active{{/if}}" />
 </template>
 
 <template name="hello">
@@ -37,10 +37,7 @@
   <div>
     <svg width="100%" height="20%" viewBox="0 0 800 130">
       {{#each cell in cells}}
-        {{> oneCell xPos=(xPos cell.time)
-                    yPos=(yPos cell.instrument)
-                    active=cell.active
-                    cellId=cell._id }}
+        {{> oneCell cell=cell}}
       {{/each}}
       <rect x="{{stepXPos}}" y="100" height="10" width="22" class="step" />
     </svg>
