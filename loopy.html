@@ -5,7 +5,7 @@
 <body>
   <h1>Loopy: a tiny simple drum machine</h1>
 
-  {{> hello}}
+  {{> main}}
 </body>
 
 <template name="oneCell">
@@ -16,7 +16,7 @@
         class="cell {{#if this.active}}active{{/if}}" />
 </template>
 
-<template name="hello">
+<template name="main">
   <p>
     Click on some of the squares, then click: 
     <button class="play">
