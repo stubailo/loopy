@@ -119,7 +119,8 @@ if (Meteor.isServer) {
       _.each(_.range(32), function (timeIndex) {
         Cells.insert({
           instrument: instrumentIndex,
-          time: timeIndex
+          time: timeIndex,
+          active: false
         });
       });
     });
