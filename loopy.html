@@ -8,6 +8,14 @@
   {{> hello}}
 </body>
 
+<template name="oneCell">
+  <rect x="{{this.xPos}}"
+        y="{{this.yPos}}"
+        height=22
+        width=22
+        class="cell {{#if this.active}}active{{/if}}" />
+</template>
+
 <template name="hello">
   <p>
     Click on some of the squares, then click: 
@@ -20,17 +28,19 @@
     </button>
 
     - BPM: <select class="bpm">
-      {{#each bpmOptions}}
-        <option value="{{this}}" selected="{{selectedBpm}}">{{this}}</option>
+      {{#each bpmOption in bpmOptions}}
+        <option value="{{bpmOption}}" selected="{{selectedBpm bpmOption}}">{{bpmOption}}</option>
       {{/each}}
     </select>
   </p>
 
   <div>
     <svg width="100%" height="20%" viewBox="0 0 800 130">
-      {{#each cells}}
-        <rect x="{{xPos}}" y="{{yPos}}" height=22 width=22
-          class="cell {{#if active}}active{{/if}}" />
+      {{#each cell in cells}}
+        {{> oneCell xPos=(xPos cell.time)
+                    yPos=(yPos cell.instrument)
+                    active=cell.active
+                    cellId=cell._id }}
       {{/each}}
       <rect x="{{stepXPos}}" y="100" height="10" width="22" class="step" />
     </svg>
