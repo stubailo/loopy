@@ -61,6 +61,12 @@ if (Meteor.isClient) {
     });
   });
 
+  Template.oneCell.events({
+    "click rect": function () {
+      Meteor.call("toggleCell", this.cellId);
+    }
+  });
+
   Template.hello.events({
     'click .play': function () {
       if (Session.get("playing")) {
@@ -68,9 +74,6 @@ if (Meteor.isClient) {
       } else {
         play();
       }
-    },
-    "click rect": function () {
-      Meteor.call("toggleCell", this._id);
     },
     "change .bpm": function (event) {
       var newBpm = parseInt(event.target.value, 10);
@@ -86,11 +89,11 @@ if (Meteor.isClient) {
     cells: function () {
       return Cells.find();
     },
-    xPos: function () {
-      return this.time * 25;
+    xPos: function (time) {
+      return time * 25;
     },
-    yPos: function () {
-      return this.instrument * 25;
+    yPos: function (instrument) {
+      return instrument * 25;
     },
     playing: function () {
       return Session.get("playing");
@@ -102,8 +105,8 @@ if (Meteor.isClient) {
       return Session.get("bpm");
     },
     bpmOptions: _.range(20, 300, 5),
-    selectedBpm: function () {
-      return this.valueOf() === Session.get("bpm");
+    selectedBpm: function (bpmOption) {
+      return Session.get("bpm") === bpmOption;
     }
   });
 }
