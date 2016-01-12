@@ -67,7 +67,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.hello.events({
+  Template.main.events({
     'click .play': function () {
       if (Session.get("playing")) {
         pause();
@@ -85,7 +85,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.hello.helpers({
+  Template.main.helpers({
     cells: function () {
       return Cells.find();
     },
