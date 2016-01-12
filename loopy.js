@@ -77,10 +77,6 @@ if (Meteor.isClient) {
     },
     "change .bpm": function (event) {
       var newBpm = parseInt(event.target.value, 10);
-
-      newBpm = Math.min(newBpm, 300);
-      newBpm = Math.max(newBpm, 20);
-
       Session.set("bpm", newBpm);
     }
   });
